@@ -1,4 +1,4 @@
-import {css, html, LitElement} from "lit";
+import {css, html, LitElement} from 'https://unpkg.com/lit@3/index.js?module';
 
 class CirrusOrderWidget extends LitElement {
 	static properties = {
@@ -145,293 +145,293 @@ class CirrusOrderWidget extends LitElement {
 		const delta = (d.ltp - d.prev_close).toFixed(2);
 		const pct = (((d.ltp - d.prev_close) / d.ltp) * 100).toFixed(2);
 		return html`
-            <div class="modal-backdrop" @click=${() => (this.open = false)}></div>
-            <div class="modal">
-                <div class="container">
-                    <div class="widget"
-                         style="background:${this.side === 'SELL' ? 'var(--sell-bg)' : 'var(--buy-bg)'}; color: var(--text-color);">
-                        <div class="header">
-                            <div>
-                                <div class="symbol">${d.tradingsymbol} <span class="exchange"
-                                                                             style="background: var(--exchange-bg); color: var(--exchange-text);">${d.exchange}</span>
-                                </div>
-                                <div class="ltp" style="color:${changeColor}">${d.ltp} <span
-                                        class="delta"> ${delta} (${pct}%)</span></div>
-                            </div>
-                            <div class="side-toggle">
-                                <button @click=${() => {
-			this.side = 'BUY';
-			this.updatePrices();
-		}}
-                                        style="background:${this.side === 'BUY' ? 'var(--buy-color)' : 'var(--inactive-button)'}">
-                                    Buy
-                                </button>
-                                <button @click=${() => {
-			this.side = 'SELL';
-			this.updatePrices();
-		}}
-                                        style="background:${this.side === 'SELL' ? 'var(--sell-color)' : 'var(--inactive-button)'}">
-                                    Sell
-                                </button>
-                            </div>
-                        </div>
+			<div class="modal-backdrop" @click=${() => (this.open = false)}></div>
+			<div class="modal">
+				<div class="container">
+					<div class="widget"
+							 style="background:${this.side === 'SELL' ? 'var(--sell-bg)' : 'var(--buy-bg)'}; color: var(--text-color);">
+						<div class="header">
+							<div>
+								<div class="symbol">${d.tradingsymbol} <span class="exchange"
+																														 style="background: var(--exchange-bg); color: var(--exchange-text);">${d.exchange}</span>
+								</div>
+								<div class="ltp" style="color:${changeColor}">${d.ltp} <span
+									class="delta"> ${delta} (${pct}%)</span></div>
+							</div>
+							<div class="side-toggle">
+								<button @click=${() => {
+									this.side = 'BUY';
+									this.updatePrices();
+								}}
+												style="background:${this.side === 'BUY' ? 'var(--buy-color)' : 'var(--inactive-button)'}">
+									Buy
+								</button>
+								<button @click=${() => {
+									this.side = 'SELL';
+									this.updatePrices();
+								}}
+												style="background:${this.side === 'SELL' ? 'var(--sell-color)' : 'var(--inactive-button)'}">
+									Sell
+								</button>
+							</div>
+						</div>
 
-                        <div class="tabs">
-                            ${['INTRADAY', 'CARRYFORWARD'].map(type => html`
-                                <div class="tab ${this.selected_product_type === type ? 'active' : ''}"
-                                     @click=${() => this.selected_product_type = type}>${type}
-                                </div>`)}
-                        </div>
-                        <div class="tabs">
-                            ${['MARKET', 'LIMIT', 'SL', 'SL-Market'].map(type => html`
-                                <div class="tab ${this.selected_order_type === type ? 'active' : ''}"
-                                     @click=${() => this.selected_order_type = type}>${type}
-                                </div>`)}
-                        </div>
+						<div class="tabs">
+							${['INTRADAY', 'CARRYFORWARD'].map(type => html`
+								<div class="tab ${this.selected_product_type === type ? 'active' : ''}"
+										 @click=${() => this.selected_product_type = type}>${type}
+								</div>`)}
+						</div>
+						<div class="tabs">
+							${['MARKET', 'LIMIT', 'SL', 'SL-Market'].map(type => html`
+								<div class="tab ${this.selected_order_type === type ? 'active' : ''}"
+										 @click=${() => this.selected_order_type = type}>${type}
+								</div>`)}
+						</div>
 
-                        <label>Lots:<input type="number" .value=${this.quantity}
-                                           @input=${e => this.quantity = +e.target.value}/>
-                            <div class="subtext">Total Qty: ${this.quantity * this.lot_size}</div>
-                        </label>
-                        <label class="field-wrapper">Price:<input type="number"
-                                                                  .value=${this.priceDisabled() ? '' : this.price}
-                                                                  ?disabled=${this.priceDisabled()}
-                                                                  @input=${e => this.price = +e.target.value}/></label>
-                        <label class="field-wrapper">Trigger Price:<input type="number"
-                                                                          .value=${this.triggerDisabled() ? '' : this.trigger_price}
-                                                                          ?disabled=${this.triggerDisabled()}
-                                                                          @input=${e => this.trigger_price = +e.target.value}/></label>
+						<label>Lots:<input type="number" .value=${this.quantity}
+															 @input=${e => this.quantity = +e.target.value}/>
+							<div class="subtext">Total Qty: ${this.quantity * this.lot_size}</div>
+						</label>
+						<label class="field-wrapper">Price:<input type="number"
+																											.value=${this.priceDisabled() ? '' : this.price}
+																											?disabled=${this.priceDisabled()}
+																											@input=${e => this.price = +e.target.value}/></label>
+						<label class="field-wrapper">Trigger Price:<input type="number"
+																															.value=${this.triggerDisabled() ? '' : this.trigger_price}
+																															?disabled=${this.triggerDisabled()}
+																															@input=${e => this.trigger_price = +e.target.value}/></label>
 
-                        <div class="actions">
-                            <button class="submit"
-                                    style="background:${this.side === 'SELL' ? 'var(--sell-color)' : 'var(--buy-color)'}">
-                                ${this.side}
-                            </button>
-                        </div>
-                        <div class="powered">Powered by Cirrus</div>
-                    </div>
+						<div class="actions">
+							<button class="submit"
+											style="background:${this.side === 'SELL' ? 'var(--sell-color)' : 'var(--buy-color)'}">
+								${this.side}
+							</button>
+						</div>
+						<div class="powered">Powered by Cirrus</div>
+					</div>
 
-                    <div class="depth-panel">
-                        <div class="depth-title">Market Depth</div>
-                        <table>
-                            <thead>
-                            <tr>
-                                <th style="text-align: left">ASK QTY</th>
-                                <th style="text-align: right">ASK</th>
-                                <th style="text-align: left">BID</th>
-                                <th style="text-align: right">BID QTY</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            ${d.depth.map(row => html`
-                                <tr>
-                                    <td style="text-align: left">${row.ask_qty}</td>
-                                    <td class="ask" style="text-align: right">${row.ask_price}</td>
-                                    <td class="bid" style="text-align: left">${row.bid_price}</td>
-                                    <td style="text-align: right">${row.bid_qty}</td>
-                                </tr>
-                            `)}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        `;
+					<div class="depth-panel">
+						<div class="depth-title">Market Depth</div>
+						<table>
+							<thead>
+							<tr>
+								<th style="text-align: left">ASK QTY</th>
+								<th style="text-align: right">ASK</th>
+								<th style="text-align: left">BID</th>
+								<th style="text-align: right">BID QTY</th>
+							</tr>
+							</thead>
+							<tbody>
+							${d.depth.map(row => html`
+								<tr>
+									<td style="text-align: left">${row.ask_qty}</td>
+									<td class="ask" style="text-align: right">${row.ask_price}</td>
+									<td class="bid" style="text-align: left">${row.bid_price}</td>
+									<td style="text-align: right">${row.bid_qty}</td>
+								</tr>
+							`)}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		`;
 	}
 
 	static styles = css`
-        :host {
-            font-family: system-ui, sans-serif;
-        }
+		:host {
+			font-family: system-ui, sans-serif;
+		}
 
-        .modal-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 999;
-        }
+		.modal-backdrop {
+			position: fixed;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.4);
+			z-index: 999;
+		}
 
-        .modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-            background: var(--background);
-            color: var(--text-color);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-        }
+		.modal {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 1000;
+			background: var(--background);
+			color: var(--text-color);
+			border-radius: 12px;
+			border: 1px solid var(--border-color);
+			overflow: hidden;
+			box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+		}
 
-        .container {
-            display: flex;
-            flex-direction: row;
-            gap: 16px;
-            padding: 16px;
-            color: var(--text-color);
-        }
+		.container {
+			display: flex;
+			flex-direction: row;
+			gap: 16px;
+			padding: 16px;
+			color: var(--text-color);
+		}
 
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-        }
+		@media (max-width: 768px) {
+			.container {
+				flex-direction: column;
+			}
+		}
 
-        .widget {
-            flex: 1;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 16px;
-            background: var(--background);
-            color: var(--text-color);
-        }
+		.widget {
+			flex: 1;
+			border: 1px solid var(--border-color);
+			border-radius: 8px;
+			padding: 16px;
+			background: var(--background);
+			color: var(--text-color);
+		}
 
-        .powered {
-            margin-top: 12px;
-            font-size: 12px;
-            color: var(--disabled-text);
-            text-align: center;
-        }
+		.powered {
+			margin-top: 12px;
+			font-size: 12px;
+			color: var(--disabled-text);
+			text-align: center;
+		}
 
-        .depth-panel {
-            width: 250px;
-            background: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 13px;
-            color: var(--text-color);
-        }
+		.depth-panel {
+			width: 250px;
+			background: var(--panel-bg);
+			border: 1px solid var(--border-color);
+			border-radius: 8px;
+			padding: 12px;
+			font-size: 13px;
+			color: var(--text-color);
+		}
 
-        .depth-title {
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
+		.depth-title {
+			font-weight: bold;
+			margin-bottom: 8px;
+		}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+		table {
+			width: 100%;
+			border-collapse: collapse;
+		}
 
-        th, td {
-            text-align: center;
-            padding: 4px;
-        }
+		th, td {
+			text-align: center;
+			padding: 4px;
+		}
 
-        thead {
-            background: var(--table-head-bg);
-            color: var(--text-color);
-        }
+		thead {
+			background: var(--table-head-bg);
+			color: var(--text-color);
+		}
 
-        .ask {
-            color: var(--negative-color);
-            font-weight: 500;
-        }
+		.ask {
+			color: var(--negative-color);
+			font-weight: 500;
+		}
 
-        .bid {
-            color: var(--positive-color);
-            font-weight: 500;
-        }
+		.bid {
+			color: var(--positive-color);
+			font-weight: 500;
+		}
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
+		.header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 12px;
+		}
 
-        .symbol {
-            font-weight: bold;
-        }
+		.symbol {
+			font-weight: bold;
+		}
 
-        .exchange {
-            font-size: 12px;
-            padding: 2px 5px;
-            border-radius: 4px;
-            margin-left: 6px;
-        }
+		.exchange {
+			font-size: 12px;
+			padding: 2px 5px;
+			border-radius: 4px;
+			margin-left: 6px;
+		}
 
-        .ltp {
-            font-size: 14px;
-            margin-top: 4px;
-        }
+		.ltp {
+			font-size: 14px;
+			margin-top: 4px;
+		}
 
-        .side-toggle button {
-            margin-left: 5px;
-            padding: 6px 12px;
-            border: none;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+		.side-toggle button {
+			margin-left: 5px;
+			padding: 6px 12px;
+			border: none;
+			color: white;
+			border-radius: 4px;
+			cursor: pointer;
+			font-weight: bold;
+		}
 
-        .tabs {
-            display: flex;
-            gap: 4px;
-            margin: 12px 0;
-        }
+		.tabs {
+			display: flex;
+			gap: 4px;
+			margin: 12px 0;
+		}
 
-        .tab {
-            padding: 6px 10px;
-            border-radius: 4px;
-            background: var(--tab-bg);
-            cursor: pointer;
-            font-size: 13px;
-            color: var(--text-color);
-        }
+		.tab {
+			padding: 6px 10px;
+			border-radius: 4px;
+			background: var(--tab-bg);
+			cursor: pointer;
+			font-size: 13px;
+			color: var(--text-color);
+		}
 
-        .tab.active {
-            background: var(--buy-color);
-            color: white;
-        }
+		.tab.active {
+			background: var(--buy-color);
+			color: white;
+		}
 
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
+		label {
+			display: block;
+			margin-bottom: 10px;
+			font-size: 14px;
+		}
 
-        input[type="number"] {
-            width: 100%;
-            padding: 6px;
-            background: var(--panel-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            margin-top: 4px;
-        }
+		input[type="number"] {
+			width: 100%;
+			padding: 6px;
+			background: var(--panel-bg);
+			color: var(--text-color);
+			border: 1px solid var(--border-color);
+			border-radius: 6px;
+			margin-top: 4px;
+		}
 
-        input:disabled {
-            background: var(--disabled-bg);
-            color: var(--disabled-text);
-        }
+		input:disabled {
+			background: var(--disabled-bg);
+			color: var(--disabled-text);
+		}
 
-        .field-wrapper {
-            position: relative;
-        }
+		.field-wrapper {
+			position: relative;
+		}
 
-        .actions {
-            margin-top: 16px;
-        }
+		.actions {
+			margin-top: 16px;
+		}
 
-        .submit {
-            color: white;
-            padding: 10px 18px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            width: 100%;
-        }
+		.submit {
+			color: white;
+			padding: 10px 18px;
+			border: none;
+			border-radius: 6px;
+			cursor: pointer;
+			width: 100%;
+		}
 
-        .subtext {
-            font-size: 12px;
-            color: var(--disabled-text);
-            margin-top: 2px;
-        }
-    `;
+		.subtext {
+			font-size: 12px;
+			color: var(--disabled-text);
+			margin-top: 2px;
+		}
+	`;
 }
 
 customElements.define('cirrus-order-widget', CirrusOrderWidget);
